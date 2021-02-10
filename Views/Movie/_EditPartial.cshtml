@@ -1,0 +1,58 @@
+@model MovieEditModel
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title">@ViewData["Title"]</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+
+    <div class="modal-body">
+        <form id="movieForm" method="post" asp-controller="Movie" asp-action=@ViewData["Action"] enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-horizontal">
+
+                <input asp-for="Id" hidden="true" />
+                
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label><br />
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ProductionYear" class="control-label"></label><br />
+                    <input asp-for="ProductionYear" class="form-control" />
+                    <span asp-validation-for="ProductionYear"></span>
+                </div>  
+
+                <div class="form-group">
+                    <label asp-for="Director" class="control-label"></label><br />
+                    <input asp-for="Director" class="form-control" />
+                    <span asp-validation-for="Director"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label><br />
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description"></span>
+                </div>
+
+                <div class="form-group">
+                    <input asp-for="BannerImage" type="file" accept="image/*" hidden="true" />
+                    <button id="addBannerBtn" class="btn btn-secondary">@ViewData["BannerBtn"]</button>
+                    <span id="bannerName"></span>
+                </div>
+
+            </div>
+        </form>
+    </div>    
+    
+    <div class="modal-footer">
+        <button class="btn btn-success btn-sm submitBtn"> Сохранить </button>
+        <button class="btn btn-secondary btn-sm cancelBtn" data-dismiss="modal"><i class="fa fa-times"></i> Закрыть </button>    
+    </div>
+</div>
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script type="text/javascript" src="~/js/movies/editPartial.js"></script>

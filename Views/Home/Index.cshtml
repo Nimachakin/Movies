@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/jquery.dataTables.css"/>
+<link rel="stylesheet" type="text/css" href="~/css/select.dataTables.css"/>
+
+@if(User.Identity.IsAuthenticated)
+{
+    <div id="crud" class="form-group">
+        <a href="Movie/Create" class="btn btn-success btn-sm createBtn">Добавить фильм</a>
+        <a href="Movie/Edit/" class="btn btn-primary btn-sm editBtn disabled">Редактировать фильм</a>
+        <a href="Movie/Get/" class="btn btn-info btn-sm readBtn disabled">Подробнее о фильме</a>        
+    </div>
+
+    <table id="movieTable" data-user="@User.Identity.Name" class="table table-bordered table-striped"></table>    
+
+    <div id="movieModalDialog" class="modal">
+        <div id="movieModalContent" class="modal-dialog modal-md">
+            <div class="modal-content"></div>
+        </div>    
+    </div>
+}
+else
+{
+    <h3>Войдите в систему, чтобы посмотреть каталог</h3>
+}
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="~/js/dataTables.select.js"></script>
+    <script type="text/javascript" src="~/js/movies/index.js"></script>
+}

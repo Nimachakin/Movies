@@ -1,0 +1,28 @@
+@model MovieCatalog.ViewModels.RegisterViewModel
+
+<h2>Регистрация нового пользователя</h2>
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div>
+        <label asp-for="UserName" class="control-label col-md-3"></label><br />
+        <input asp-for="UserName" class="form-control col-md-3" />
+        <span asp-validation-for="UserName"></span>
+    </div>
+
+    <div>
+        <label asp-for="Password" class="control-label col-md-3"></label><br />
+        <input asp-for="Password" class="form-control col-md-3" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ConfirmPassword" class="control-label col-md-3"></label><br />
+        <input asp-for="ConfirmPassword" class="form-control col-md-3" />
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+
+    <div>
+        <input type="submit" class="form-control col-md-3 btn btn-primary" value="Регистрация" />
+    </div>
+</form>

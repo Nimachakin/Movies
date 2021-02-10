@@ -1,0 +1,28 @@
+@model MovieCatalog.ViewModels.LoginViewModel
+ 
+<h2>Вход в приложение</h2>
+<form method="post" asp-controller="Account" asp-action="Login"
+      asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="form-group">
+        <label asp-for="UserName" class="control-label col-md-3"></label><br />
+        <input asp-for="UserName" class="form-control col-md-3" />
+        <span asp-validation-for="UserName"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password" class="control-label col-md-3"></label><br />
+        <input asp-for="Password" class="form-control col-md-3" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <div class="form-group custom-control custom-switch col-md-3">
+        <input id="asd" type="checkbox" class="custom-control-input" /> 
+        <label asp-for="RememberMe" class="custom-control-label" for="asd"></label>
+    </div>
+
+    <div>
+        <input type="submit" value="Войти" class="btn btn-secondary" />
+    </div>
+</form>
