@@ -6327,11 +6327,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Projects\\MovieCatalog\\MovieCatalog.csproj",
+      "projectUniqueName": "E:\\Projects\\MoviesClone\\Movies\\MovieCatalog.csproj",
       "projectName": "MovieCatalog",
-      "projectPath": "E:\\Projects\\MovieCatalog\\MovieCatalog.csproj",
+      "projectPath": "E:\\Projects\\MoviesClone\\Movies\\MovieCatalog.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "E:\\Projects\\MovieCatalog\\obj\\",
+      "outputPath": "E:\\Projects\\MoviesClone\\Movies\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"

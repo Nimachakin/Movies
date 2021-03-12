@@ -8,9 +8,11 @@ using MovieCatalog.Models;
 using Microsoft.AspNetCore.Identity;
 using System.IO;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MovieCatalog.Controllers
 {
+    [Authorize]
     public class MovieController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -32,7 +34,8 @@ namespace MovieCatalog.Controllers
                     Name = m.Name, 
                     Year = m.ProductionYear, 
                     Director = m.Director, 
-                    UserName = m.User.UserName }).ToListAsync();
+                    UserName = m.User.UserName })
+                .ToListAsync();
 
             return Json(movies);
         }
@@ -104,19 +107,20 @@ namespace MovieCatalog.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var movie = await context.Movies
+                .Include(m => m.User)
                 .Where(m => m.Id == id)
                 .FirstOrDefaultAsync();
             
-            var model = new MovieEditModel() {
-                Id = movie.Id.ToString(), 
-                Name = movie.Name, 
-                ProductionYear = movie.ProductionYear, 
-                Director = movie.Director, 
-                Description = movie.Description
-            };            
-            
-            if(movie != null)
+            if(movie != null && User.Identity.Name == movie.User.UserName)
             {
+                var model = new MovieEditModel() {
+                    Id = movie.Id.ToString(), 
+                    Name = movie.Name, 
+                    ProductionYear = movie.ProductionYear, 
+                    Director = movie.Director, 
+                    Description = movie.Description
+                };                        
+            
                 ViewData["Title"] = "Редактирование фильма";
                 ViewData["BannerBtn"] = "Заменить постер";
                 ViewData["Action"] = "Edit"; 
@@ -135,25 +139,34 @@ namespace MovieCatalog.Controllers
             if(ModelState.IsValid)
             {
                 var movie = await context.Movies
+                    .Include(m => m.User)
                     .Where(m => m.Id == Int32.Parse(model.Id))
                     .FirstOrDefaultAsync();
-                movie.Name = model.Name;
-                movie.ProductionYear = model.ProductionYear ?? 0; 
-                movie.Director = model.Director; 
-                movie.Description = model.Description;
-
-                if(model.BannerImage != null)
+                
+                if(movie != null && User.Identity.Name == movie.User.UserName)
                 {
-                    using(var stream = new MemoryStream())
-                    {
-                        model.BannerImage.CopyTo(stream);
-                        movie.Banner = stream.ToArray();
-                    }
-                }
+                    movie.Name = model.Name;
+                    movie.ProductionYear = model.ProductionYear ?? 0; 
+                    movie.Director = model.Director; 
+                    movie.Description = model.Description;
 
-                context.Entry(movie).State = EntityState.Modified;
-                await context.SaveChangesAsync();
-                return Ok();
+                    if(model.BannerImage != null)
+                    {
+                        using(var stream = new MemoryStream())
+                        {
+                            model.BannerImage.CopyTo(stream);
+                            movie.Banner = stream.ToArray();
+                        }
+                    }
+
+                    context.Entry(movie).State = EntityState.Modified;
+                    await context.SaveChangesAsync();
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             else
             {

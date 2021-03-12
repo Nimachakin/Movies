@@ -5,7 +5,7 @@ using MovieCatalog.ViewModels;
 using System.Threading.Tasks;
 
 namespace MovieCatalog.Controllers 
-{
+{    
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
